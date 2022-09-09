@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+<body>
+
+    <head>
+
+        <style>
+            body {
+
+               background-color: rgb(0, 0, 0);
+                background-size: cover;
+            }
+
+
+            h1 {
+                color: Black;
+                text-align: center;
+                font-size: 80px;
+            }
+
+            h2 {
+                color: black;
+
+            }
+
+            #output {
+                color: white;
+                background-color: rgb(0, 0, 0);
+                margin: 20px;
+                margin-left: auto;
+                resize: none;
+                margin-right: auto;
+
+
+
+            }
+
+            #output2 {
+                color: rgb(255, 255, 255);
+                background-color: rgb(0, 0, 0);
+                vertical-align: top;
+                margin-left: auto;
+                resize: none;
+                margin-right: auto;
+
+
+
+            }
+            #output3 {
+                color: rgb(255, 0, 0);
+                font-size: 30px;
+                border-color: transparent;
+                background-color: rgb(255, 255, 255);
+                vertical-align: top;
+                margin-left: auto;
+                resize: none;
+                margin-right: auto;
+
+
+
+            }
+       
+       
+
+            textarea {
+                vertical-align: top;
+            }
+        </style>
+    
+    
+           
+        <title>Compilador</title>
+        <h1>COOL  COMPILER</h1>
+        
+        <textarea style="background-color: black;"  id="output3" cols="100" rows="2" readonly="false"></textarea>
+       
+        <button onclick="lerOutput()">Start</button>
+        <br>
+        <div>
+        <textarea id="output" cols="80" rows="40"></textarea> 
+   <br>
+        <textarea id="output2" cols="80" rows="40" readonly="false"></textarea>
+    </div>
+  
+
+
+
+        <script>
+
+// function static void (){
+
+
+// }
+
+// //Contar linhas comentadas 
+//Ler comentarios e não registrar os tokens, apenas ler
+//self = return
+
+
+
+
+function letra(caracter) {
+                if (caracter >= 'a' && caracter <= 'z' || caracter >= 'A' && caracter<= 'Z') {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+
+            function numero(caracter) {
+                if (caracter >= 0 && caracter <= 9) {
+                    return true;
+                }
+            }
+
+            function espaco(caracter) {
+            
+                if (caracter == ' ') {
+                    return true;
+                }
+
+            }
+
+            function especial(caracter) {
+                if (letra(caracter) == false && numero(caracter)== false) {
+             
+                    return true;
+                }
+            }
+ var elementos = new Array;
+ var token = new Object();
+function lerOutput(){
+    textos = document.getElementById("output").value;
+    textos = textos.split('\n');
+
+    // linha lida a
+
+  // lerLinha(textos[0]);
+ lerLinha(textos);
+}
+
+function lerLinha(textos){
+var muketa = new Object();
+var linhai=0;
+var i=0;
+elemento=0;
+
+while(linhai< textos.length){
+    separaPorEspaco = textos[linhai].split(" ");
+
+ while(elemento < separaPorEspaco.length){
+    token[i]= { "linha": linhai+1, "conteudo": separaPorEspaco[elemento] };
+ 
+    i++;
+    elemento++;
+   }
+linhai++;
+elemento=0;
+}
+console.log(token[0].conteudo);
+//console.log(textos);
+
+setarTipo(token, i);
+}
+
+function reservadas(token , i ){
+ alert(token[i].conteudo);
+     if(token[i].conteudo.toLowerCase() == 'int'){
+    return { "linha": token[i].linha, "tipo": "int"};
+        
+     }
+     
+    
+}
+
+
+function setarTipo(token , tamanho){
+    i=0 ;
+    var tokenNum =0;
+             var lexema = new Object();
+            // console.log(token);
+ 
+while(i < tamanho){
+   
+     if(token[i].conteudo.toLowerCase() == 'int'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "int"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'class'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "class"};
+        tokenNum++;
+     }
+        else if(token[i].conteudo.toLowerCase() == 'if'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "if"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'else'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "else"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'false'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "false"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'fi'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "fi"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'in'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "in"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'inherits'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "inherits"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'isvoid'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "isvoid"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'let'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "let"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'loop'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "loop"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'pool'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "pool"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'then'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "then"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'while'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "while"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'case'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "case"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'esac'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "esac"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'new'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "new"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'of'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "of"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'not'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "not"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'true'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "true"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'out_string'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "out_string"};
+        tokenNum++;
+     }
+     else if(token[i].conteudo.toLowerCase() == 'self_type'){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "self_type"};
+        tokenNum++;
+     }
+     
+     else if(token[i].conteudo == '+' || token[i].conteudo == '-' || token[i].conteudo == '/'  || token[i].conteudo == '*' ){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": token[i].conteudo};
+        tokenNum++;
+     }
+     else if(token[i].conteudo == '(' || token[i].conteudo == ')' ){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": token[i].conteudo};
+        tokenNum++;
+     }
+     else if(token[i].conteudo == '{' || token[i].conteudo == '}' ){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": token[i].conteudo};
+        tokenNum++;
+     }
+     else if(token[i].conteudo == ':' ){
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": token[i].conteudo};
+        tokenNum++;
+     }
+
+
+     else{
+        
+        porCaracter = token[i].conteudo;
+        porCaracter = porCaracter.split("");
+        passo = 100;
+      var aux =0;
+ 
+ console.log(passo);
+
+    var combinacao = '';
+var salvaisso = '';
+var linha = 1;
+
+ while( aux <= porCaracter.length){
+    switch (passo) {
+
+                case 100: {
+ 
+                           if (letra(porCaracter[aux]) == true) { 
+                    combinacao += porCaracter[aux];
+                    
+                     
+                                passo = 101;
+                              
+                                break;
+                                 console.log(porCaracter[aux], 'teste zero');
+                               
+                            }
+                    
+                    
+                            else if (numero(porCaracter[aux]) == true) {
+
+                               
+                                combinacao += porCaracter[aux];
+                                 passo = 104;
+                                break;
+                            }
+                         
+                            else if(porCaracter[aux] == '"' ){
+                                passo = 103;
+                                break;
+                            }
+                            /*
+                            else if(porCaracter[aux] == "("){
+                                lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "("};
+        tokenNum++;
+        combinacao='';
+     
+                             }
+                              else if(porCaracter[aux] == ")"){
+                                lexema[tokenNum] =  {"linha": token[i].linha, "tipo": ")"};
+        tokenNum++;
+        combinacao='';
+     
+
+}
+ else if(porCaracter[aux] == ";"){
+    lexema[tokenNum] =  {"linha": token[i].linha, "tipo": ";"};
+        tokenNum++;
+        combinacao='';
+}
+        
+                          
+                           */
+                         
+                         break;
+                         
+
+                           
+
+                        
+                        }  
+                        
+                        case 101: {
+                         //  alert("Teste");
+                         while(letra(porCaracter[aux]) == true || numero(porCaracter[aux]) == true  || porCaracter[aux] == '_' ){
+                 
+                        
+                             combinacao += porCaracter[aux];
+                             aux++;
+                             if(combinacao.toLowerCase() == "out_string"){
+                               
+        lexema[tokenNum] =  {"linha": token[i].linha, "tipo": "out_string"};
+        tokenNum++;
+        combinacao='';
+        break;
+     
+                             }
+                          
+                            }                      
+                         
+                            
+                       
+                            passo = 102;
+                            
+//break;
+                            
+                        }
+                        case 102: {
+                     
+                     
+  
+                            
+                            if(combinacao== "if"){
+                        lexema[tokenNum]= { "tipo": "if", "valor": combinacao ,"linha": token[i].linha };
+                        tokenNum ++;
+                      
+                      }    
+                   
+                      //  salvaisso += '<KY_ID, ' + combinacao + '> ';
+                      if(combinacao!= ''){
+                        lexema[tokenNum]= { "tipo": "ID", "valor": combinacao ,"linha": token[i].linha };
+                        tokenNum ++;
+                      
+                      }    
+                   
+                    if(porCaracter[aux] == "("){
+                        lexema[tokenNum]= { "tipo": "(", "valor": "(" ,"linha": token[i].linha };
+                        tokenNum ++;
+
+                    }
+                    if(porCaracter[aux] == ")"){
+                        lexema[tokenNum]= { "tipo": ")", "valor": ")" ,"linha": token[i].linha };
+                        tokenNum ++;
+
+                    }
+
+   
+
+                       // console.log(salvaisso);
+                          //  document.getElementById('output2').value =  '<KY_ID,' + salvapalavra+'>';
+                    combinacao= '';
+                            passo = 100;
+                            break;
+                        }
+
+                        case 103: {
+                         if(porCaracter[aux] == undefined){
+                           i++;
+                           porCaracter = token[i].conteudo;
+                                    porCaracter = porCaracter.split("");
+                                    combinacao+= " ";
+                                    aux =0;
+                         }
+                            while(porCaracter[aux]!= '"'){
+
+                                combinacao += porCaracter[aux];
+                                aux++;
+                                console.log(porCaracter[aux]);
+                                if(porCaracter.length == aux){
+                                    i++;
+                                    porCaracter = token[i].conteudo;
+                                    porCaracter = porCaracter.split("");
+                                    combinacao+= " ";
+                                    aux =0;
+                                }
+                            }
+                            console.log(combinacao);
+                           
+                            lexema[tokenNum]= { "tipo": "STING", "valor": combinacao ,"linha": token[i].linha};
+                        tokenNum ++;
+
+                         passo = 100;
+                         //combinacao= '';
+                         break;
+
+                        }
+                    
+                    case 104:{
+
+                    while(numero(porCaracter[aux]) == true){
+                        combinacao+= porCaracter[aux];
+                        aux++;
+                    }
+
+                    if(letra(porCaracter[aux]) == true ){
+                   alert('erro lexico');
+                        document.getElementById('output3').value= "[ERRO LEXICO] linha "+ (token[i].linha) +" Elemento " +token[i].conteudo;
+                          
+                }else{
+                    lexema[tokenNum]= { "tipo": "NUM", "valor": combinacao ,"linha": token[i].linha };
+                        tokenNum ++;
+                        combinacao = '';
+                    passo = 100;
+                    break;
+                }
+
+
+
+
+
+     }
+     
+   
+  //  aux++;
+}
+
+aux++;
+}
+
+
+
+     }
+     i++;
+    }
+    console.log(lexema);
+    converte = JSON.stringify(lexema);
+    document.getElementById("output2").value= converte;
+
+    check= document.getElementById('output3').value;
+    if(check.length <= 0){
+        document.getElementById('output3').value = "[LEXICO] OK"
+        Sintaxe(lexema, tokenNum-1);
+
+}
+}
+
+function Sintaxe(lexema, tamanho){
+
+    function limite(i){
+       
+        if(tamanho >= i){
+            return true;
+        }
+    }
+    function typeClass(i){
+
+        etapa =0;
+status = "NO";
+        switch(etapa){
+            case 0:{
+               
+                if(lexema[i].tipo == "class" && limite(i) == true){
+                    i++;
+                   
+                    if(limite(i) == true){
+                    if(lexema[i].tipo == "ID" && limite(i) == true){
+                    i++;
+                    }
+                }
+                    if(limite(i) == true){
+                    if(lexema[i].tipo == "inherits" && limite(i) == true){
+                    i++;
+                    }
+                }
+                    if(limite(i) == true){
+                    if(lexema[i].tipo == "ID" && limite(i) == true){
+                    i++;
+                    }
+                }
+                    if(limite(i) == true){
+                    if(lexema[i].tipo == "{" && limite(i) == true){
+                    i++;
+                    status = "OK";
+                    }
+                }
+                      
+                }
+                
+                
+             
+                
+            
+        
+            etapa = 1;
+             break;
+
+          //      if(status == "OK"){
+        //            alert("CERTO");
+        //        }
+        //        else{
+        //            alert("ERRO");
+       //         }
+            }
+
+
+            /*
+
+
+                        program ::= [[class; ]]+
+                        class ::= class TYPE [inherits TYPE] { [[feature; ]]∗
+                        }
+                        feature ::= ID( [ formal [[, formal]]∗
+                        ] ) : TYPE { expr }
+                        | ID : TYPE [ <- expr ]
+                        formal ::= ID : TYPE
+
+
+                        expr ::= ID <- expr
+                        | expr[@TYPE].ID( [ expr [[, expr]]∗
+                        ] )
+                        | ID( [ expr [[, expr]]∗
+                        ] )
+                        | if expr then expr else expr fi
+                        | while expr loop expr pool
+                        | { [[expr; ]]+}
+                        | let ID : TYPE [ <- expr ] [[,ID : TYPE [ <- expr ]]]∗
+                        in expr
+                        | case expr of [[ID : TYPE => expr; ]]+esac
+                        | new TYPE
+                        | isvoid expr
+                        | expr + expr
+                        | expr − expr
+                        | expr ∗ expr
+                        | expr / expr
+                        | ˜expr
+                        | expr < expr
+                        | expr <= expr
+                        | expr = expr
+                        | not expr
+                        | (expr)
+                        | ID
+                        | integer
+                        | string
+                        | true
+                        | false
+
+                        */
+            case 1:{
+
+     //regra 1 
+    
+     while(exp(i)== true){
+        
+     }
+     
+
+     
+            
+
+            }
+            }
+        }
+    
+function exp(i){
+
+    if(token[i].tipo == "ID"){
+return true ;
+     }
+     if(token[i].tipo == "not"){
+return true;
+}
+if(token[i].tipo == "interger"){
+    return true;
+}
+if(token[i].tipo == "string"){
+    return true;
+}
+if(token[i].tipo == "true"){
+    return true;
+}
+if(token[i].tipo == "FALSE"){
+    return true;
+}
+if(token[i].tipo == "isvoid"){
+    return true;
+}
+if(token[i].tipo == "new"){
+    return true;
+}
+if(token[i].tipo == "teste"){
+
+}
+
+}
+    
+    function typeFeature(){
+        
+    }
+    function typeFormal(){
+        
+    }
+
+    function typeExpr(){
+        
+    }
+
+
+    function checagem(i){
+
+    }
+var status= "NO";
+    function classType(i){
+      
+        console.log(lexema[i].tipo);
+       
+        if(lexema[i].tipo == "class" &&  lexema[i+1].tipo == "ID" && lexema[i+2].tipo == "inherits" && lexema[i+3].tipo == "ID" && lexema[i+4].tipo == "{" ){
+            i+=5;
+           status = "OK";
+            feature(i); 
+        }
+       if(status != "OK"){
+            alert("[Sintatico] Erro");
+            
+        }
+console.log(status);
+
+}
+function formal(i){
+  if(i+2 <= tamanho){
+    if(lexema[i].tipo == "ID" &&  lexema[i+1].tipo == ":" && lexema[i+2].tipo == "ID" ){
+      return true;
+    }
+}
+    else{
+        alert("[Sintaxe] ERRO");
+    }
+}
+function feature(i){
+    console.log(i);
+    console.log(tamanho);
+   
+ 
+    if(i+3 > tamanho){
+alert("erro");
+    }
+   else if(lexema[i].tipo == "ID" &&  lexema[i+1].tipo == "("){             
+        i+=2;
+       
+        while(lexema[i].tipo != ")"){
+            
+        if(formal(i)== true){
+            i+=3;
+}else{
+    alert("erro");
+
+
+    }
+  
+
+    }
+    if(lexema[i+1].tipo == "{" ){
+expr(i);
+    }else{
+        alert("erro");
+    }
+
+}else{
+    alert("erro");
+}
+}
+
+    /*
+    function program(){
+
+}
+ 
+    
+  
+
+
+
+  function formal(){
+
+  }
+
+  function expr(){
+
+  }
+
+*/
+var i=0;
+
+
+console.log(tamanho);
+
+    typeClass(i,tamanho);
+  
+}
+
+
+        </script>
+    </head>
+
+</body>
